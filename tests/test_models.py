@@ -46,6 +46,11 @@ class TestAccount(unittest.TestCase):
     #  T E S T   C A S E S
     ######################################################################
 
+    def test_persistent_base_init_coverage(self):
+        """It should ensure PersistentBase __init__ is covered"""
+        base_instance = Account.mro()[1]() 
+        self.assertIsNone(base_instance.id)
+
     def test_create_an_account(self):
         """It should Create an Account and assert that it exists"""
         fake_account = AccountFactory()
@@ -175,3 +180,27 @@ class TestAccount(unittest.TestCase):
         """It should not Deserialize an account with a TypeError"""
         account = Account()
         self.assertRaises(DataValidationError, account.deserialize, [])
+
+    def test_deserialize_no_date_joined(self):
+        """It should Deserialize an account with no date_joined and set it to today"""
+        data = {
+            "name": "No Date Account",
+            "email": "nodate@example.com",
+            "address": "456 Main St"
+            # No "date_joined" key here
+        }
+        account = Account()
+        account.deserialize(data)
+
+        self.assertEqual(account.name, "No Date Account")
+        self.assertEqual(account.email, "nodate@example.com")
+        self.assertEqual(account.address, "456 Main St")
+        self.assertEqual(account.phone_number, None) # phone_number is also optional and should be None
+        self.assertEqual(account.date_joined, date.today()) # Should default to today's date
+
+    def test_find_by_name_no_results(self):
+        """It should Find an Account by name and return an empty list if not found"""
+        accounts = Account.find_by_name("NonExistentName").all()
+        self.assertEqual(len(accounts), 0)
+        self.assertIsInstance(accounts, list) # Ensure it's a list, even if empty
+        
