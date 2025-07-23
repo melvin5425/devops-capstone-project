@@ -5,8 +5,9 @@ Test cases for Account Model
 import logging
 import unittest
 import os
+from datetime import date
 from service import app
-from service.models import Account, DataValidationError, db
+from service.models import Account, DataValidationError, db, PersistentBase
 from tests.factories import AccountFactory
 
 DATABASE_URI = os.getenv(
@@ -48,7 +49,7 @@ class TestAccount(unittest.TestCase):
 
     def test_persistent_base_init_coverage(self):
         """It should ensure PersistentBase __init__ is covered"""
-        base_instance = Account.mro()[1]() 
+        base_instance = PersistentBase() 
         self.assertIsNone(base_instance.id)
 
     def test_create_an_account(self):
