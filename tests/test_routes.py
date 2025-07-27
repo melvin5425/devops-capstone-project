@@ -171,3 +171,9 @@ class TestAccountService(TestCase):
         """It should not allow an illegal method call"""
         resp = self.client.delete(BASE_URL)
         self.assertEqual(resp.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    def test_update_account_not_found(self):
+        """It should not Update an Account that is not found"""
+        non_existent_id = 99999
+        test_account_data = AccountFactory().serialize()
+        test_account_data["name"] = "Updated Name"
