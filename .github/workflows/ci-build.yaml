@@ -43,5 +43,6 @@ jobs:
       - name: Run unit tests with nose2
         run: |
           nose2 --with-coverage --coverage service --coverage-report term-missing
+          coverage report -m --fail-under=95
         env:
           DATABASE_URI: "postgresql://postgres:pgs3cr3t@postgres:5432/testdb"
