@@ -136,7 +136,7 @@ class TestAccountService(TestCase):
         )
         self.assertEqual(resp.status_code, status.HTTP_200_OK)
         data = resp.get_json()
-        self.assertEqual(data["name"], account.name) 
+        self.assertEqual(data["name"], account.name)
 
     def test_get_account_not_found(self):
         """It should not Read an Account that is not found"""
@@ -178,7 +178,6 @@ class TestAccountService(TestCase):
 
     def test_update_account_not_found(self):
         """It should not Update an Account that is not found"""
-        non_existent_id = 99999
         test_account_data = AccountFactory().serialize()
         test_account_data["name"] = "Updated Name"
 

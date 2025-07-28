@@ -49,7 +49,7 @@ class TestAccount(unittest.TestCase):
 
     def test_persistent_base_init_coverage(self):
         """It should ensure PersistentBase __init__ is covered"""
-        base_instance = PersistentBase() 
+        base_instance = PersistentBase()
         self.assertIsNone(base_instance.id)
 
     def test_create_an_account(self):
@@ -196,12 +196,11 @@ class TestAccount(unittest.TestCase):
         self.assertEqual(account.name, "No Date Account")
         self.assertEqual(account.email, "nodate@example.com")
         self.assertEqual(account.address, "456 Main St")
-        self.assertEqual(account.phone_number, None) # phone_number is also optional and should be None
-        self.assertEqual(account.date_joined, date.today()) # Should default to today's date
+        self.assertEqual(account.phone_number, None)  # phone_number is also optional and should be None
+        self.assertEqual(account.date_joined, date.today())  # Should default to today's date
 
     def test_find_by_name_no_results(self):
         """It should Find an Account by name and return an empty list if not found"""
         accounts = Account.find_by_name("NonExistentName").all()
         self.assertEqual(len(accounts), 0)
-        self.assertIsInstance(accounts, list) # Ensure it's a list, even if empty
-        
+        self.assertIsInstance(accounts, list)  # Ensure it's a list, even if empty
